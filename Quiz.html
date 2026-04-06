@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descubra o que está acontecendo com seu corpo — LongevityNews</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #1a1a2e;
+  --navy-deep: #0f0f1e;
+  --navy-mid:  #141428;
+  --gold:      #C9A96E;
+  --gold-l:    #E8D5A3;
+  --gold-d:    #A8854A;
+  --cream:     #F0EAD8;
+  --body:      #C0B8A8;
+  --muted:     #6A6A86;
+  --border:    rgba(201,169,110,.18);
+  --border-h:  rgba(201,169,110,.45);
+  --white:     #FFFFFF;
+  --warn-bg:   rgba(201,100,80,.08);
+  --warn-brd:  rgba(201,100,80,.35);
+  --warn-text: #E8A090;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--navy-deep);
+  color: var(--body);
+  font-family: 'Jost', sans-serif;
+  font-size: 16px; font-weight: 400; line-height: 1.8;
+  min-height: 100vh; overflow-x: hidden;
+}
+body::before {
+  content:''; position:fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, rgba(201,169,110,.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(201,169,110,.03) 0%, transparent 60%);
+  pointer-events:none;
+}
+.wrap { position:relative; z-index:1; }
+
+/* ── HEADER ── */
+header {
+  padding:20px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:.5px solid var(--border);
+  background:rgba(15,15,30,.88);
+  backdrop-filter:blur(12px);
+  position:sticky; top:0; z-index:50;
+}
+.logo-text { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:600; color:var(--gold); letter-spacing:.5px; }
+.logo-sub  { font-size:9px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); display:block; margin-top:1px; }
+.header-tag { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); border:.5px solid var(--border); padding:6px 14px; }
+
+/* ── INTRO ── */
+#screen-intro {
+  min-height:calc(100vh - 65px);
+  display:flex; align-items:center; justify-content:center;
+  padding:60px 24px;
+}
+.intro-inner { max-width:680px; text-align:center; }
+
+.intro-eyebrow { display:inline-flex; align-items:center; gap:12px; margin-bottom:28px; }
+.intro-eyebrow span { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); font-weight:500; }
+.eyebrow-line { width:32px; height:.5px; background:var(--gold); opacity:.5; }
+
+.intro-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,6vw,62px);
+  font-weight:700; line-height:1.1; color:var(--white); margin-bottom:16px;
+}
+.intro-title em { font-style:italic; color:var(--gold); }
+
+.intro-sub { font-size:16px; color:var(--body); max-width:520px; margin:0 auto 16px; line-height:1.85; }
+
+.stat-pill {
+  display:inline-block;
+  border:.5px solid rgba(201,169,110,.4);
+  background:rgba(201,169,110,.06);
+  padding:10px 24px; font-size:13px; color:var(--gold);
+  margin:16px 0 40px; font-style:italic;
+}
+
+.info-grid { display:flex; justify-content:center; gap:32px; margin-bottom:44px; flex-wrap:wrap; }
+.info-item  { text-align:center; }
+.info-num   { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:700; color:var(--gold); display:block; line-height:1; }
+.info-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; display:block; margin-top:4px; }
+
+.intro-disclaimer { font-size:12px; color:var(--muted); margin-top:14px; line-height:1.65; font-style:italic; }
+
+/* ── BOTÕES ── */
+.btn {
+  display:inline-block; font-family:'Jost',sans-serif;
+  font-size:11px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase;
+  padding:18px 48px; text-decoration:none; cursor:pointer; border:none;
+  transition:all .28s; line-height:1;
+}
+.btn-gold    { background:var(--gold); color:var(--navy-deep); }
+.btn-gold:hover { background:var(--gold-l); transform:translateY(-2px); }
+.btn-outline { background:transparent; border:1px solid var(--gold); color:var(--gold); }
+.btn-outline:hover { background:rgba(201,169,110,.08); }
+
+/* ── QUIZ ── */
+#screen-quiz { display:none; padding:40px 0 80px; }
+.quiz-container { max-width:700px; margin:0 auto; padding:0 24px; }
+
+.progress-wrap { margin-bottom:48px; }
+.progress-top  { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.progress-label { font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+.progress-count { font-family:'Cormorant Garamond',serif; font-size:18px; color:var(--gold); }
+.progress-bar-bg   { height:2px; background:rgba(201,169,110,.15); position:relative; overflow:hidden; }
+.progress-bar-fill { height:100%; background:var(--gold); transition:width .5s ease; width:0%; }
+
+.question-card { animation:fadeSlide .45s ease; }
+@keyframes fadeSlide { from{opacity:0;transform:translateX(20px);} to{opacity:1;transform:translateX(0);} }
+
+.question-tag  { font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; display:block; }
+.question-text { font-family:'Cormorant Garamond',serif; font-size:clamp(20px,3.5vw,28px); font-weight:600; color:var(--white); line-height:1.3; margin-bottom:32px; }
+
+/* Múltipla escolha */
+.options-list { display:flex; flex-direction:column; gap:12px; }
+.option-btn {
+  display:flex; align-items:center; gap:16px; padding:18px 22px;
+  border:.5px solid var(--border); background:transparent;
+  color:var(--body); font-family:'Jost',sans-serif; font-size:15px; font-weight:400;
+  cursor:pointer; text-align:left; transition:all .22s; width:100%;
+}
+.option-btn:hover { border-color:var(--border-h); background:rgba(201,169,110,.04); color:var(--cream); }
+.option-btn.selected { border-color:var(--gold); background:rgba(201,169,110,.08); color:var(--cream); }
+.option-letter {
+  width:28px; height:28px; border:.5px solid rgba(201,169,110,.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; color:var(--gold); font-weight:600; flex-shrink:0; transition:all .22s;
+}
+.option-btn.selected .option-letter { background:var(--gold); color:var(--navy-deep); border-color:var(--gold); }
+
+/* Escala */
+.scale-wrap    { margin-top:8px; }
+.scale-labels  { display:flex; justify-content:space-between; margin-bottom:12px; }
+.scale-label   { font-size:11px; color:var(--muted); letter-spacing:.5px; }
+.scale-options { display:flex; gap:8px; }
+.scale-btn {
+  flex:1; padding:16px 8px; border:.5px solid var(--border); background:transparent;
+  cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:6px; transition:all .22s;
+}
+.scale-btn:hover   { border-color:var(--border-h); background:rgba(201,169,110,.04); }
+.scale-btn.selected{ border-color:var(--gold); background:rgba(201,169,110,.08); }
+.scale-num  { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--gold); line-height:1; }
+.scale-word { font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+.scale-desc { font-size:13px; color:var(--muted); font-style:italic; margin-top:16px; text-align:center; }
+
+/* Navegação */
+.quiz-nav { display:flex; justify-content:space-between; align-items:center; margin-top:36px; }
+.btn-back { background:none; border:none; font-family:'Jost',sans-serif; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); cursor:pointer; padding:8px 0; transition:color .2s; }
+.btn-back:hover { color:var(--gold); }
+.btn-next { min-width:180px; text-align:center; }
+.btn-next:disabled { opacity:.35; cursor:not-allowed; transform:none; }
+
+/* ── LOADING ── */
+#screen-loading { display:none; min-height:70vh; align-items:center; justify-content:center; flex-direction:column; gap:24px; }
+.loading-text { font-family:'Cormorant Garamond',serif; font-size:22px; font-style:italic; color:var(--cream); }
+.loading-dots { display:flex; gap:8px; }
+.loading-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); opacity:.4; animation:pulse 1.4s ease-in-out infinite; }
+.loading-dot:nth-child(2){ animation-delay:.2s; }
+.loading-dot:nth-child(3){ animation-delay:.4s; }
+@keyframes pulse { 0%,80%,100%{opacity:.2;transform:scale(.8);} 40%{opacity:1;transform:scale(1);} }
+
+/* ── RESULTADO ── */
+#screen-result { display:none; padding:60px 0 80px; }
+.result-container { max-width:700px; margin:0 auto; padding:0 24px; }
+.result-reveal { animation:fadeUp .7s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+
+.result-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; display:block; }
+.result-type-badge { display:inline-block; background:rgba(201,169,110,.12); border:.5px solid var(--gold); padding:8px 20px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.result-title { font-family:'Cormorant Garamond',serif; font-size:clamp(26px,5vw,44px); font-weight:700; color:var(--white); line-height:1.15; margin-bottom:24px; }
+.result-divider { width:48px; height:1px; background:var(--gold); opacity:.6; margin-bottom:28px; }
+.result-desc { font-size:15px; color:var(--body); line-height:1.85; margin-bottom:14px; }
+
+.result-impact { border:.5px solid rgba(201,169,110,.35); background:rgba(201,169,110,.04); padding:28px 32px; margin:32px 0; }
+.result-impact-title { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; display:block; }
+.result-impact-text { font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--cream); line-height:1.55; }
+
+.symptoms-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:28px 0; }
+@media(max-width:500px){ .symptoms-grid{ grid-template-columns:1fr; } }
+.symptom-item { display:flex; align-items:flex-start; gap:10px; padding:12px 14px; border:.5px solid var(--border); font-size:13px; color:var(--body); }
+.symptom-dot  { width:5px; height:5px; border-radius:50%; background:var(--gold); margin-top:7px; flex-shrink:0; }
+
+/* Aviso clínico — perfis graves */
+.clinical-warning {
+  border:.5px solid var(--warn-brd);
+  background:var(--warn-bg);
+  padding:24px 28px; margin:32px 0;
+}
+.clinical-warning-title { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--warn-text); margin-bottom:10px; display:block; }
+.clinical-warning-text  { font-size:14px; color:var(--body); line-height:1.75; }
+.clinical-warning-text strong { color:var(--warn-text); font-weight:500; }
+
+/* CTA do resultado */
+.result-cta-box { border:1px solid rgba(201,169,110,.4); padding:44px 36px; text-align:center; margin:32px 0 0; position:relative; }
+.result-cta-badge { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--navy-deep); padding:0 18px; font-size:9px; letter-spacing:2.5px; color:var(--gold); text-transform:uppercase; font-weight:600; white-space:nowrap; }
+.result-cta-title { font-family:'Cormorant Garamond',serif; font-size:clamp(20px,3.5vw,32px); color:var(--white); margin-bottom:14px; line-height:1.25; }
+.result-cta-desc  { font-size:14px; color:var(--body); max-width:440px; margin:0 auto 28px; line-height:1.75; }
+.result-cta-price { font-size:12px; color:var(--muted); margin-top:14px; letter-spacing:.5px; }
+
+/* Disclaimer do resultado */
+.result-disclaimer { margin-top:28px; padding:16px 20px; border:.5px solid rgba(201,169,110,.12); font-size:12px; color:var(--muted); font-style:italic; line-height:1.7; text-align:center; }
+
+.result-restart { text-align:center; margin-top:28px; }
+.btn-restart { background:none; border:none; font-family:'Jost',sans-serif; font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); cursor:pointer; transition:color .2s; }
+.btn-restart:hover { color:var(--gold); }
+
+/* ── TELA DE E-MAIL (captura de lead) ── */
+#screen-email {
+  display:none; min-height:70vh;
+  align-items:center; justify-content:center;
+  padding:60px 24px;
+}
+.email-inner { max-width:520px; width:100%; text-align:center; }
+.email-eyebrow { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:16px; display:block; }
+.email-title { font-family:'Cormorant Garamond',serif; font-size:clamp(26px,5vw,40px); font-weight:700; color:var(--white); line-height:1.15; margin-bottom:12px; }
+.email-sub { font-size:15px; color:var(--body); line-height:1.8; margin-bottom:32px; }
+.email-field-wrap { position:relative; margin-bottom:12px; }
+.email-input {
+  width:100%; padding:18px 22px;
+  background:transparent; border:.5px solid var(--border);
+  color:var(--cream); font-family:'Jost',sans-serif; font-size:15px;
+  outline:none; transition:border-color .22s;
+}
+.email-input::placeholder { color:var(--muted); }
+.email-input:focus { border-color:var(--gold); }
+.email-input.error { border-color:var(--warn-brd); }
+.email-error-msg { font-size:12px; color:var(--warn-text); text-align:left; margin-bottom:16px; display:none; }
+.email-error-msg.visible { display:block; }
+.btn-email { width:100%; padding:18px; margin-top:4px; }
+.email-disclaimer { font-size:11px; color:var(--muted); margin-top:14px; font-style:italic; line-height:1.6; }
+.email-sending { font-size:13px; color:var(--gold); margin-top:12px; display:none; }
+
+/* ── FOOTER ── */
+footer { border-top:.5px solid var(--border); padding:28px 24px; text-align:center; background:rgba(15,15,30,.6); }
+.footer-text { font-size:11px; color:var(--muted); line-height:1.8; }
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  .info-grid { gap:20px; }
+  .result-cta-box { padding:36px 22px; }
+  .quiz-nav { flex-direction:column-reverse; gap:14px; align-items:stretch; }
+  .btn-next, .btn-back { width:100%; text-align:center; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<header>
+  <div>
+    <span class="logo-text">LongevityNews</span>
+    <span class="logo-sub">Ciência · Longevidade · Resultado</span>
+  </div>
+  <span class="header-tag">Teste Gratuito</span>
+</header>
+
+<!-- INTRO -->
+<section id="screen-intro">
+  <div class="intro-inner">
+    <div class="intro-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span>Descubra o que está acontecendo</span>
+      <div class="eyebrow-line"></div>
+    </div>
+
+    <h1 class="intro-title">
+      Seu corpo pode estar<br>
+      <em>envelhecendo mais rápido</em><br>
+      do que deveria.
+    </h1>
+
+    <p class="intro-sub">
+      A ciência provou que certos padrões emocionais e físicos podem acelerar o envelhecimento celular em até 17 anos. Em 10 perguntas, este teste identifica o que está acontecendo com você — e o que fazer a respeito.
+    </p>
+
+    <div class="stat-pill">
+      Psychological Medicine, 2016 · n = 2.750 participantes
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-num">10</span>
+        <span class="info-label">perguntas</span>
+      </div>
+      <div class="info-item">
+        <span class="info-num">3</span>
+        <span class="info-label">minutos</span>
+      </div>
+      <div class="info-item">
+        <span class="info-num">8</span>
+        <span class="info-label">perfis identificados</span>
+      </div>
+    </div>
+
+    <button class="btn btn-gold" onclick="startQuiz()">Fazer o teste gratuitamente</button>
+    <p class="intro-disclaimer">
+      Teste de caráter educativo e informativo. Não realiza diagnósticos clínicos.<br>
+      Gratuito · Sem cadastro · Resultado imediato
+    </p>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="screen-quiz">
+  <div class="quiz-container">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label">Progresso</span>
+        <span class="progress-count" id="progress-count">1 / 10</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+    </div>
+    <div id="question-area"></div>
+  </div>
+</section>
+
+<!-- LOADING -->
+<section id="screen-loading">
+  <p class="loading-text">Analisando suas respostas...</p>
+  <div class="loading-dots">
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+  </div>
+</section>
+
+<!-- CAPTURA DE E-MAIL -->
+<section id="screen-email">
+  <div class="email-inner">
+    <span class="email-eyebrow">Seu resultado está pronto</span>
+    <h2 class="email-title">Para onde enviamos<br>sua análise completa?</h2>
+    <p class="email-sub">Insira seu melhor e-mail para liberar o resultado e receber recomendações personalizadas para o seu perfil.</p>
+
+    <div class="email-field-wrap">
+      <input
+        type="email"
+        id="email-input"
+        class="email-input"
+        placeholder="seu@email.com"
+        autocomplete="email"
+        inputmode="email"
+      />
+    </div>
+    <p class="email-error-msg" id="email-error">Por favor, insira um e-mail válido.</p>
+
+    <button class="btn btn-gold btn-email" onclick="submitEmail()">
+      Ver meu resultado →
+    </button>
+
+    <p class="email-sending" id="email-sending">Salvando...</p>
+    <p class="email-disclaimer">Seus dados estão seguros. Não enviamos spam.</p>
+  </div>
+</section>
+
+<!-- RESULTADO -->
+<section id="screen-result">
+  <div class="result-container">
+    <div class="result-reveal" id="result-content"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-text">
+    © 2026 LongevityNews · Este teste tem caráter exclusivamente educativo e informativo.<br>
+    Não realiza diagnósticos clínicos e não substitui avaliação médica ou psicológica.<br>
+    Se você está passando por uma crise ou tem sintomas persistentes, procure um profissional de saúde.
+  </p>
+</footer>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+// PERGUNTAS — linguagem indireta, sem presumir ansiedade
+// Scores: [TAG, Pânico, Social, Fobia, TOC, TEPT, Estresse, BemEstar]
+// ════════════════════════════════════════════════════════════
+const questions = [
+  {
+    id: 1,
+    type: "choice",
+    tag: "Sensações físicas",
+    text: "Quando você se sente desconfortável ou em alerta, qual sensação aparece com mais frequência no seu corpo?",
+    options: [
+      { text: "Tensão muscular que não passa — pescoço, ombros ou mandíbula", scores: [3,0,1,0,0,1,2,0] },
+      { text: "Coração acelerado de repente, falta de ar ou tontura",          scores: [0,4,0,0,0,1,1,0] },
+      { text: "Suor frio, rubor ou tremor em situações com outras pessoas",    scores: [0,1,4,0,0,0,1,0] },
+      { text: "Desconforto físico intenso diante de algo específico",          scores: [0,1,0,4,0,0,1,0] },
+      { text: "Raramente ou nunca percebo essas sensações",                    scores: [0,0,0,0,0,0,0,4] },
+    ]
+  },
+  {
+    id: 2,
+    type: "scale",
+    tag: "Frequência",
+    text: "Com que frequência sua cabeça fica acelerada — pensando em vários problemas ao mesmo tempo — mesmo quando você quer descansar?",
+    labels: ["Quase nunca", "O tempo todo"],
+    descriptions: [
+      "1 — Raramente acontece comigo",
+      "2 — Acontece de vez em quando",
+      "3 — Acontece com frequência",
+      "4 — Acontece quase toda semana",
+      "5 — É assim praticamente todos os dias"
+    ],
+    scores: [
+      [0,0,0,0,0,0,1,3],
+      [1,0,0,0,1,0,1,1],
+      [2,0,0,0,1,0,2,0],
+      [3,0,1,0,2,1,2,0],
+      [4,1,1,0,2,1,3,0],
+    ]
+  },
+  {
+    id: 3,
+    type: "choice",
+    tag: "Gatilhos",
+    text: "O que costuma te deixar mais desconfortável ou em estado de alerta?",
+    options: [
+      { text: "Nada específico — parece ser tudo ao mesmo tempo: trabalho, saúde, futuro", scores: [4,1,0,0,1,0,2,0] },
+      { text: "Situações com outras pessoas — ser avaliado, falar em público, encontros",  scores: [0,0,4,0,0,0,1,0] },
+      { text: "Episódios que chegam de repente, sem aviso e sem causa aparente",           scores: [0,4,0,0,0,0,0,0] },
+      { text: "Pensamentos que voltam repetidamente mesmo quando tento afastá-los",        scores: [1,0,0,0,4,1,1,0] },
+      { text: "Nada em especial — não me sinto em estado de alerta com frequência",        scores: [0,0,0,0,0,0,0,4] },
+    ]
+  },
+  {
+    id: 4,
+    type: "scale",
+    tag: "Qualidade do sono",
+    text: "Com que frequência você acorda sem se sentir descansado ou tem dificuldade para dormir?",
+    labels: ["Nunca", "Sempre"],
+    descriptions: [
+      "1 — Raramente tenho problemas com o sono",
+      "2 — Às vezes demoro para adormecer ou acordo cansado",
+      "3 — Com frequência acordo durante a noite ou sem energia",
+      "4 — Quase sempre não me sinto descansado ao acordar",
+      "5 — Insônia ou sono não reparador é algo constante na minha vida"
+    ],
+    scores: [
+      [0,0,0,0,0,0,0,3],
+      [1,0,0,0,0,1,1,1],
+      [2,0,0,0,1,2,1,0],
+      [3,1,0,0,2,2,2,0],
+      [4,2,0,0,3,3,3,0],
+    ]
+  },
+  {
+    id: 5,
+    type: "choice",
+    tag: "Comportamento",
+    text: "Existe algo que você evita na sua vida por causa do desconforto que causa?",
+    options: [
+      { text: "Sim — lugares, pessoas ou situações que me lembram algo ruim que vivi", scores: [0,0,0,0,0,4,1,0] },
+      { text: "Sim — situações com outras pessoas: festas, reuniões, apresentações",    scores: [0,0,4,0,0,0,1,0] },
+      { text: "Sim — algo específico que me gera medo intenso e imediato",              scores: [0,0,0,4,0,0,0,0] },
+      { text: "Não — não evito situações nem vivo com preocupação constante",           scores: [0,0,0,0,0,0,0,4] },
+    ]
+  },
+  {
+    id: 6,
+    type: "scale",
+    tag: "Pensamentos recorrentes",
+    text: "Com que frequência você tem pensamentos que se repetem e são difíceis de afastar?",
+    labels: ["Nunca", "Sempre"],
+    descriptions: [
+      "1 — Raramente tenho esse tipo de pensamento",
+      "2 — Às vezes surgem, mas passo logo",
+      "3 — Com frequência e alguma dificuldade de afastar",
+      "4 — É difícil me distrair quando chegam",
+      "5 — Consomem uma parte significativa do meu dia"
+    ],
+    scores: [
+      [0,0,0,0,0,0,0,3],
+      [1,0,0,0,1,0,1,1],
+      [2,0,0,0,2,1,1,0],
+      [3,0,1,0,3,2,2,0],
+      [3,0,1,0,4,2,2,0],
+    ]
+  },
+  {
+    id: 7,
+    type: "choice",
+    tag: "Episódios intensos",
+    text: "Você já viveu momentos em que o coração acelerou muito, faltou ar ou teve uma sensação forte de que algo muito ruim ia acontecer — mesmo sem um motivo claro?",
+    options: [
+      { text: "Sim — isso acontece com frequência e sem aviso prévio",          scores: [0,4,0,0,0,1,1,0] },
+      { text: "Sim — mas geralmente diante de situações ou lugares específicos", scores: [0,1,2,2,0,1,1,0] },
+      { text: "Raramente — sinto mais uma tensão contínua e baixa do que picos", scores: [3,0,1,0,1,1,2,0] },
+      { text: "Nunca vivi esse tipo de episódio",                                scores: [0,0,0,0,0,0,0,3] },
+    ]
+  },
+  {
+    id: 8,
+    type: "scale",
+    tag: "Impacto na rotina",
+    text: "Com que frequência sintomas emocionais ou físicos — como ansiedade, tensão, insônia ou preocupação — interferem no seu trabalho, nos seus relacionamentos ou nas suas atividades do dia a dia?",
+    labels: ["Nunca", "Sempre"],
+    descriptions: [
+      "1 — Raramente interferem — consigo funcionar normalmente",
+      "2 — Às vezes atrapalham, mas consigo lidar",
+      "3 — Com frequência interferem na minha rotina",
+      "4 — Quase sempre dificultam bastante o meu dia",
+      "5 — Estão impedindo coisas importantes na minha vida"
+    ],
+    scores: [
+      [0,0,0,0,0,0,0,4],
+      [1,1,1,0,0,0,1,1],
+      [2,1,2,1,1,1,2,0],
+      [3,2,2,2,2,2,3,0],
+      [4,3,3,3,3,3,4,0],
+    ]
+  },
+  {
+    id: 9,
+    type: "choice",
+    tag: "Origem percebida",
+    text: "Se você sente algum desconforto emocional ou físico recorrente, de onde você percebe que ele vem?",
+    options: [
+      { text: "Parece vir de todos os lados — trabalho, família, saúde, dinheiro, futuro", scores: [4,0,0,0,1,0,2,0] },
+      { text: "Vem de algo que vivi no passado e que ainda me afeta hoje",                 scores: [0,0,0,0,0,4,1,0] },
+      { text: "Vem principalmente do que as pessoas pensam ou como me avaliam",            scores: [0,0,4,0,0,0,1,0] },
+      { text: "Não tenho um desconforto significativo para identificar",                   scores: [0,0,0,0,0,0,0,4] },
+    ]
+  },
+  {
+    id: 10,
+    type: "scale",
+    tag: "Duração",
+    text: "Há quanto tempo você convive com sintomas emocionais ou físicos — como ansiedade, tensão, insônia ou preocupação constante — de forma significativa?",
+    labels: ["Nunca / raramente", "Há mais de 5 anos"],
+    descriptions: [
+      "1 — Raramente ou nunca sinto esses desconfortos",
+      "2 — Percebi algo nos últimos meses",
+      "3 — Faz entre 6 meses e 2 anos que convivo com isso",
+      "4 — Já faz alguns anos — entre 2 e 5 anos",
+      "5 — Convivo com isso há mais de 5 anos"
+    ],
+    scores: [
+      [0,0,0,0,0,0,1,4],
+      [1,1,0,0,0,1,2,1],
+      [2,2,1,1,1,2,2,0],
+      [3,2,2,2,2,2,2,0],
+      [4,3,3,3,3,3,2,0],
+    ]
+  }
+];
+
+// ════════════════════════════════════════════════════════════
+// PERFIS — 7 tipos
+// grave: true = exibe aviso clínico antes do CTA
+// ════════════════════════════════════════════════════════════
+const profiles = [
+  {
+    id: 0, grave: false,
+    badge: "Perfil: Preocupação Generalizada",
+    title: "Seu sistema nervoso está em alerta constante — sobre tudo ao mesmo tempo.",
+    desc1: "O padrão que você apresenta é muito comum: uma preocupação difusa que abrange trabalho, saúde, família e futuro, presente na maioria dos dias e difícil de controlar. Não é um medo pontual de algo específico — é uma tensão de fundo que raramente some por completo.",
+    desc2: "Esse perfil é o que tem relação mais direta com o envelhecimento celular acelerado, justamente pela natureza crônica e contínua da ativação do sistema de estresse do organismo.",
+    impact: "A exposição crônica ao cortisol gerada por esse padrão é um dos principais fatores de encurtamento dos telômeros — as estruturas que protegem o DNA e determinam a velocidade do envelhecimento celular.",
+    symptoms: ["Preocupação difícil de desligar","Tensão muscular constante","Cansaço sem causa aparente","Dificuldade de concentração","Irritabilidade frequente","Distúrbios de sono"],
+    primeAngle: "O PRIME [Ansiedade] foi desenvolvido para agir diretamente neste padrão — reduzindo a inflamação crônica, equilibrando a microbiota intestinal e regulando o eixo do estresse através de alimentação e hábitos com base científica.",
+    warningText: null,
+    ctaLabel: "O que o PRIME faz por este perfil"
+  },
+  {
+    id: 1, grave: true,
+    badge: "Perfil: Episódios de Intensidade Aguda",
+    title: "Seu corpo entra em modo de emergência — mesmo sem emergência real.",
+    desc1: "O padrão que você apresenta inclui episódios de desconforto intenso e repentino — coração acelerado, falta de ar, tontura, sensação de que algo grave vai acontecer. Esses episódios chegam sem aviso e tendem a deixar um rastro de antecipação sobre quando podem voltar.",
+    desc2: "Esse tipo de resposta envolve uma hiperativação do sistema nervoso autônomo — uma reação fisiológica real que o corpo produz de forma desproporcional ao risco percebido.",
+    impact: "Episódios recorrentes de ativação intensa geram picos de cortisol e adrenalina que, quando frequentes, contribuem para a inflamação sistêmica e têm impacto mensurável no envelhecimento biológico.",
+    symptoms: ["Episódios súbitos de desconforto intenso","Coração acelerado sem motivo claro","Falta de ar ou sensação de sufocamento","Tontura ou desorientação","Medo de que algo ruim aconteça","Antecipação sobre novos episódios"],
+    primeAngle: "O PRIME [Ansiedade] inclui técnicas de regulação nervosa — especialmente respiração controlada com evidência clínica (Stanford, 2023) — que atuam diretamente na resposta de ativação aguda, reduzindo a frequência e intensidade dos episódios.",
+    warningText: "Episódios recorrentes com essas características merecem avaliação médica para descartar causas físicas e receber o acompanhamento adequado. <strong>O PRIME [Ansiedade] é uma ferramenta educativa de apoio — e não substitui avaliação clínica ou psicológica.</strong> Se os episódios são frequentes, procure um profissional de saúde.",
+    ctaLabel: "Como o PRIME apoia este perfil"
+  },
+  {
+    id: 2, grave: false,
+    badge: "Perfil: Desconforto Social",
+    title: "O olhar dos outros ativa em você um nível de alerta desproporcional.",
+    desc1: "O padrão que você apresenta envolve desconforto significativo em situações onde você pode ser avaliado por outras pessoas — falar em grupo, conhecer alguém novo, cometer um erro na frente de outros. Não é timidez: é uma resposta do sistema nervoso que vai além do que a situação objetivamente exige.",
+    desc2: "Esse perfil é frequentemente não reconhecido por anos, porque a estratégia de evitar as situações parece funcionar — mas reforça o padrão a longo prazo e limita progressivamente a vida.",
+    impact: "O estresse antecipatório crônico desse padrão mantém o sistema de estresse do organismo em ativação contínua — com consequências mensuráveis para o envelhecimento celular ao longo do tempo.",
+    symptoms: ["Desconforto intenso em situações sociais","Preocupação excessiva antes de eventos","Rubor, tremor ou voz embargada","Evitação de situações com outras pessoas","Autocrítica intensa após interações","Sensação de estar sendo observado ou julgado"],
+    primeAngle: "O PRIME [Ansiedade] atua no substrato fisiológico desse padrão — regulando neurotransmissores que controlam a resposta de alerta e criando uma base corporal mais estável para o sistema nervoso.",
+    warningText: null,
+    ctaLabel: "Como o PRIME apoia este perfil"
+  },
+  {
+    id: 3, grave: false,
+    badge: "Perfil: Reatividade a Estímulo Específico",
+    title: "Seu desconforto tem um gatilho preciso — e uma intensidade desproporcional.",
+    desc1: "O padrão que você apresenta envolve uma reação intensa e imediata diante de algo específico — um animal, altura, agulha, espaço fechado, avião ou outra situação. A intensidade da resposta é claramente maior do que o risco real representa, mas isso não a torna menor quando o gatilho aparece.",
+    desc2: "Esse é um dos padrões mais bem compreendidos pela ciência — e também um dos que mais se beneficia de abordagens específicas, como a terapia de exposição gradual, que tem altíssima taxa de sucesso.",
+    impact: "Quando o gatilho está presente com frequência no ambiente, a resposta de alerta repetida eleva cronicamente o cortisol — com impacto no sistema imunológico e no processo de envelhecimento celular.",
+    symptoms: ["Reação física intensa diante do gatilho","Coração acelerado, suor, tremor","Reconhecimento de que a reação é excessiva","Evitação ativa do gatilho","Antecipação ansiosa quando o gatilho pode aparecer","Limitação de atividades por causa da evitação"],
+    primeAngle: "O PRIME [Ansiedade] não é voltado especificamente para esse padrão — que responde melhor a terapia especializada. Mas atua na regulação geral do sistema nervoso, reduzindo a reatividade de base e criando maior resiliência fisiológica.",
+    warningText: null,
+    ctaLabel: "Como o PRIME apoia este perfil"
+  },
+  {
+    id: 4, grave: true,
+    badge: "Perfil: Pensamentos e Rituais Repetitivos",
+    title: "Sua mente produz pensamentos que ela mesma não consegue parar.",
+    desc1: "O padrão que você apresenta envolve pensamentos intrusivos que retornam repetidamente — e comportamentos ou rituais mentais que você realiza para reduzir o desconforto que eles geram. O alívio é temporário, e o ciclo tende a se repetir.",
+    desc2: "Esse padrão é bem documentado pela ciência e responde muito bem a tratamentos específicos. O primeiro passo é reconhecê-lo — o que você já está fazendo ao fazer este teste.",
+    impact: "O estado de hipervigilância mental constante desse padrão mantém o sistema nervoso em ativação crônica, com consequências mensuráveis para a inflamação sistêmica e o envelhecimento celular.",
+    symptoms: ["Pensamentos intrusivos que retornam","Rituais ou comportamentos compulsivos","Sensação de que algo está errado","Alívio temporário após o ritual","Ciclo que se repete e consome energia","Reconhecimento de que o padrão é excessivo"],
+    primeAngle: "O PRIME [Ansiedade] trabalha no substrato fisiológico — regulando a microbiota intestinal e neurotransmissores que influenciam o sistema nervoso. Pode ser um recurso de apoio valioso ao lado do tratamento especializado.",
+    warningText: "Este padrão se beneficia muito de acompanhamento psicológico especializado, especialmente de abordagens como a Terapia Cognitivo-Comportamental (TCC). <strong>O PRIME [Ansiedade] é uma ferramenta educativa de apoio — e não substitui tratamento clínico ou psicológico.</strong> Se os sintomas são significativos, procure um profissional de saúde.",
+    ctaLabel: "Como o PRIME apoia este perfil"
+  },
+  {
+    id: 5, grave: true,
+    badge: "Perfil: Impacto de Experiências Passadas",
+    title: "Algo que você viveu ainda mora no seu sistema nervoso.",
+    desc1: "O padrão que você apresenta sugere que experiências difíceis do passado ainda estão ativas no seu sistema nervoso — produzindo hipervigilância, evitação de situações que lembram o que aconteceu, e dificuldade de se sentir seguro no presente.",
+    desc2: "Isso não é fraqueza — é uma resposta normal de um sistema nervoso que passou por algo fora do comum. O problema não é você: é que o corpo ficou em modo de ameaça mesmo depois que o perigo passou.",
+    impact: "O impacto de experiências traumáticas não tratadas está entre os fatores de maior influência no envelhecimento celular — com estudos mostrando alterações significativas nos marcadores biológicos de envelhecimento em pessoas com esse histórico.",
+    symptoms: ["Memórias ou imagens intrusivas do passado","Estado constante de vigilância e alerta","Evitação de situações que lembram o evento","Dificuldade de se sentir seguro","Distúrbios de sono e pesadelos","Dificuldade de confiar ou de se conectar"],
+    primeAngle: "O PRIME [Ansiedade] oferece ferramentas de regulação fisiológica — respiração, alimentação anti-inflamatória, sono — que podem criar uma base corporal mais estável para o processo de recuperação.",
+    warningText: "Este padrão se beneficia de acompanhamento psicológico especializado, como EMDR ou TCC focada em trauma. <strong>O PRIME [Ansiedade] é uma ferramenta educativa de apoio — e não substitui tratamento clínico ou psicológico.</strong> Se os sintomas estão presentes e são significativos, procurar um profissional de saúde é o passo mais importante.",
+    ctaLabel: "Como o PRIME apoia este perfil"
+  },
+  {
+    id: 6, grave: false,
+    badge: "Perfil: Sobrecarga Crônica",
+    title: "Seu corpo está pagando o preço de um ritmo que nunca para.",
+    desc1: "O padrão que você apresenta não tem um gatilho único ou específico — é o resultado acumulado de muita pressão, muita responsabilidade, pouco descanso e um ritmo de vida que o organismo não foi projetado para sustentar indefinidamente.",
+    desc2: "Esse é o padrão mais comum na população geral — e frequentemente normalizado porque 'todo mundo está assim'. Mas o corpo não normaliza: ele registra, acumula e eventualmente cobra.",
+    impact: "A sobrecarga crônica mantém o cortisol cronicamente elevado, comprometendo imunidade, sono, digestão e acelerando o envelhecimento celular de forma silenciosa e progressiva.",
+    symptoms: ["Cansaço constante — mesmo dormindo","Dificuldade de desligar a cabeça","Irritabilidade com situações pequenas","Sensação de que a lista nunca termina","Dificuldade de aproveitar momentos de lazer","Tensão muscular e dores frequentes"],
+    primeAngle: "O PRIME [Ansiedade] foi construído especialmente para este perfil — que responde muito bem a intervenções de alimentação e hábitos. Em 21 dias, o protocolo atua no cortisol, na microbiota e no sistema nervoso, de forma prática e sem mudanças radicais na rotina.",
+    warningText: null,
+    ctaLabel: "O que o PRIME faz por este perfil"
+  },
+  {
+    id: 7, grave: false, bemestar: true,
+    badge: "Perfil: Equilíbrio e Bem-Estar",
+    title: "Você está bem — e pode ficar ainda melhor.",
+    desc1: "Suas respostas indicam que você não apresenta, no momento, padrões significativos de estresse, ansiedade ou sobrecarga emocional. Isso é algo a ser reconhecido e preservado — não é tão comum quanto parece.",
+    desc2: "Mas a ciência mostra que o bem-estar não é um estado fixo: ele se constrói ativamente. Pessoas que investem em saúde mental e celular enquanto estão bem envelhecem de forma mais lenta e com muito mais qualidade de vida.",
+    impact: "Manter o cortisol regulado, a microbiota saudável e o sistema nervoso equilibrado — mesmo quando tudo vai bem — é o que distingue quem envelhece com vitalidade de quem apenas envelhece.",
+    symptoms: ["Sono geralmente reparador","Rotina funcional sem grandes interrupções","Relacionamentos sem sobrecarga emocional significativa","Ausência de pensamentos intrusivos frequentes","Boa capacidade de descanso e recuperação","Funcionamento estável no dia a dia"],
+    primeAngle: "O PRIME [Ansiedade] não é apenas para quem sofre — é também para quem quer proteger o que já tem. O protocolo foi desenvolvido para regular o eixo do estresse, preservar os telômeros e manter o corpo em modo de longevidade, antes que os sinais apareçam.",
+    warningText: null,
+    ctaLabel: "Use o PRIME como prevenção"
+  }
+];
+
+// ════════════════════════════════════════════════════════════
+// LÓGICA
+// ════════════════════════════════════════════════════════════
+let currentQ = 0;
+let answers  = Array(questions.length).fill(null);
+let scores   = Array(8).fill(0);
+
+function startQuiz() {
+  document.getElementById('screen-intro').style.display = 'none';
+  document.getElementById('screen-quiz').style.display  = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q   = questions[currentQ];
+  const pct = (currentQ / questions.length) * 100;
+
+  document.getElementById('progress-count').textContent = `${currentQ + 1} / ${questions.length}`;
+  document.getElementById('progress-bar').style.width   = pct + '%';
+
+  let html = `<div class="question-card">
+    <span class="question-tag">${q.tag}</span>
+    <p class="question-text">${q.text}</p>`;
+
+  if (q.type === 'choice') {
+    html += `<div class="options-list">`;
+    ['A','B','C','D','E'].slice(0, q.options.length).forEach((letter, i) => {
+      const sel = answers[currentQ] === i ? 'selected' : '';
+      html += `<button class="option-btn ${sel}" onclick="selectChoice(${i})">
+        <span class="option-letter">${letter}</span>${q.options[i].text}
+      </button>`;
+    });
+    html += `</div>`;
+  } else {
+    const words = ['Nunca','Raramente','Às vezes','Frequente','Sempre'];
+    html += `<div class="scale-wrap">
+      <div class="scale-labels">
+        <span class="scale-label">${q.labels[0]}</span>
+        <span class="scale-label">${q.labels[1]}</span>
+      </div>
+      <div class="scale-options">`;
+    for (let v = 0; v < 5; v++) {
+      const sel = answers[currentQ] === v ? 'selected' : '';
+      html += `<button class="scale-btn ${sel}" onclick="selectScale(${v})">
+        <span class="scale-num">${v+1}</span>
+        <span class="scale-word">${words[v]}</span>
+      </button>`;
+    }
+    const desc = answers[currentQ] !== null ? q.descriptions[answers[currentQ]] : 'Selecione uma opção';
+    html += `</div><p class="scale-desc" id="scale-desc">${desc}</p></div>`;
+  }
+
+  const isFirst = currentQ === 0;
+  const isLast  = currentQ === questions.length - 1;
+  const hasAns  = answers[currentQ] !== null;
+
+  html += `<div class="quiz-nav">
+    ${isFirst ? '<span></span>' : '<button class="btn-back" onclick="goBack()">← Voltar</button>'}
+    <button class="btn btn-gold btn-next" onclick="goNext()" ${hasAns ? '' : 'disabled'} id="btn-next">
+      ${isLast ? 'Ver meu resultado' : 'Próxima →'}
+    </button>
+  </div></div>`;
+
+  document.getElementById('question-area').innerHTML = html;
+}
+
+function selectChoice(idx) {
+  answers[currentQ] = idx;
+  document.getElementById('btn-next').disabled = false;
+  document.querySelectorAll('.option-btn').forEach((b, i) => b.classList.toggle('selected', i === idx));
+}
+
+function selectScale(val) {
+  answers[currentQ] = val;
+  document.getElementById('btn-next').disabled = false;
+  document.querySelectorAll('.scale-btn').forEach((b, i) => b.classList.toggle('selected', i === val));
+  const el = document.getElementById('scale-desc');
+  if (el) el.textContent = questions[currentQ].descriptions[val];
+}
+
+function goNext() {
+  if (answers[currentQ] === null) return;
+  const q   = questions[currentQ];
+  const ans = answers[currentQ];
+  const scoreArr = q.type === 'choice' ? q.options[ans].scores : q.scores[ans];
+  scoreArr.forEach((v, i) => { scores[i] += v; });
+
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    showLoading();
+  }
+}
+
+function goBack() {
+  if (currentQ > 0) {
+    // Desfazer pontuação da questão atual
+    const q   = questions[currentQ];
+    const ans = answers[currentQ];
+    if (ans !== null) {
+      const s = q.type === 'choice' ? q.options[ans].scores : q.scores[ans];
+      s.forEach((v, i) => { scores[i] -= v; });
+    }
+    // Desfazer pontuação da questão anterior
+    const pq   = questions[currentQ - 1];
+    const pans = answers[currentQ - 1];
+    if (pans !== null) {
+      const ps = pq.type === 'choice' ? pq.options[pans].scores : pq.scores[pans];
+      ps.forEach((v, i) => { scores[i] -= v; });
+    }
+    answers[currentQ] = null;
+    currentQ--;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function showLoading() {
+  document.getElementById('screen-quiz').style.display    = 'none';
+  document.getElementById('screen-loading').style.display = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Após o loading, vai para a tela de e-mail (não direto para o resultado)
+  setTimeout(showEmailScreen, 2400);
+}
+
+// ════════════════════════════════════════════════════════════
+// TELA DE CAPTURA DE E-MAIL
+// ════════════════════════════════════════════════════════════
+function showEmailScreen() {
+  document.getElementById('screen-loading').style.display = 'none';
+  document.getElementById('screen-email').style.display   = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('email-input').focus();
+}
+
+// ════════════════════════════════════════════════════════════
+// INTEGRAÇÃO COM GOOGLE SHEETS — INSTRUÇÕES
+// ════════════════════════════════════════════════════════════
+//
+// PASSO 1 — Crie a planilha
+//   • Acesse sheets.google.com e crie uma nova planilha
+//   • Nomeie as colunas na linha 1:
+//     A1: Data  |  B1: Email  |  C1: Perfil
+//
+// PASSO 2 — Crie o Apps Script
+//   • Na planilha: menu Extensões > Apps Script
+//   • Apague o código existente e cole o seguinte:
+//
+//   function doPost(e) {
+//     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+//     var data  = JSON.parse(e.postData.contents);
+//     sheet.appendRow([
+//       new Date().toLocaleString('pt-BR'),
+//       data.email,
+//       data.perfil
+//     ]);
+//     return ContentService
+//       .createTextOutput(JSON.stringify({ status: 'ok' }))
+//       .setMimeType(ContentService.MimeType.JSON);
+//   }
+//
+// PASSO 3 — Publique o script como Web App
+//   • Clique em "Implantar" > "Nova implantação"
+//   • Tipo: "App da Web"
+//   • Executar como: "Eu (sua conta Google)"
+//   • Quem pode acessar: "Qualquer pessoa"
+//   • Clique em "Implantar" e copie a URL gerada
+//
+// PASSO 4 — Cole a URL abaixo no lugar de COLE_SUA_URL_AQUI
+//
+// ════════════════════════════════════════════════════════════
+
+const GOOGLE_SHEETS_URL = 'COLE_SUA_URL_AQUI';
+
+function submitEmail() {
+  const input    = document.getElementById('email-input');
+  const errorMsg = document.getElementById('email-error');
+  const sending  = document.getElementById('email-sending');
+  const email    = input.value.trim();
+
+  // Validação básica
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    input.classList.add('error');
+    errorMsg.classList.add('visible');
+    return;
+  }
+  input.classList.remove('error');
+  errorMsg.classList.remove('visible');
+
+  // Descobre o perfil identificado para salvar junto ao e-mail
+  let maxScore = -1, maxIdx = 0;
+  scores.forEach((s, i) => { if (s > maxScore) { maxScore = s; maxIdx = i; } });
+  const perfilNome = profiles[maxIdx].badge;
+
+  // Exibe "Salvando..."
+  sending.style.display = 'block';
+  document.querySelector('.btn-email').disabled = true;
+
+  // Envia para o Google Sheets (ou pula se URL não configurada)
+  if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== 'COLE_SUA_URL_AQUI') {
+    fetch(GOOGLE_SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors', // necessário para Apps Script
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, perfil: perfilNome })
+    })
+    .catch(() => {}) // erros silenciosos — o resultado é exibido de qualquer forma
+    .finally(() => {
+      sending.style.display = 'none';
+      showResult();
+    });
+  } else {
+    // URL não configurada — exibe o resultado mesmo assim (útil em testes)
+    setTimeout(() => {
+      sending.style.display = 'none';
+      showResult();
+    }, 600);
+  }
+}
+
+function showResult() {
+  let maxScore = -1, maxIdx = 0;
+  scores.forEach((s, i) => { if (s > maxScore) { maxScore = s; maxIdx = i; } });
+
+  const p = profiles[maxIdx];
+
+  // Esconde todas as telas anteriores
+  document.getElementById('screen-loading').style.display = 'none';
+  document.getElementById('screen-email').style.display   = 'none';
+  document.getElementById('screen-result').style.display  = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const symptomsHtml = p.symptoms.map(s =>
+    `<div class="symptom-item"><div class="symptom-dot"></div>${s}</div>`
+  ).join('');
+
+  const warningHtml = p.warningText ? `
+    <div class="clinical-warning">
+      <span class="clinical-warning-title">Atenção — leia antes de continuar</span>
+      <p class="clinical-warning-text">${p.warningText}</p>
+    </div>` : '';
+
+  const isBemEstar = p.bemestar === true;
+
+  const ctaBadge = isBemEstar
+    ? "Proteção e longevidade"
+    : p.grave
+      ? "Ferramenta de apoio ao tratamento"
+      : "A solução para o seu perfil";
+
+  const symptomsTitle = isBemEstar
+    ? "O que suas respostas indicam"
+    : "Sinais comuns neste perfil";
+
+  const impactTitle = isBemEstar
+    ? "Por que investir agora, mesmo estando bem"
+    : "O impacto no envelhecimento celular";
+
+  const ctaButtonText = isBemEstar
+    ? "Quero usar o PRIME como prevenção"
+    : "Quero acessar o PRIME agora";
+
+  document.getElementById('result-content').innerHTML = `
+    <span class="result-eyebrow">Seu resultado</span>
+    <div class="result-type-badge">${p.badge}</div>
+    <h2 class="result-title">${p.title}</h2>
+    <div class="result-divider"></div>
+
+    <p class="result-desc">${p.desc1}</p>
+    <p class="result-desc">${p.desc2}</p>
+
+    <div class="result-impact">
+      <span class="result-impact-title">${impactTitle}</span>
+      <p class="result-impact-text">${p.impact}</p>
+    </div>
+
+    <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px">${symptomsTitle}</span>
+    <div class="symptoms-grid">${symptomsHtml}</div>
+
+    ${warningHtml}
+
+    <div class="result-cta-box">
+      <span class="result-cta-badge">${ctaBadge}</span>
+      <h3 class="result-cta-title">${p.ctaLabel}</h3>
+      <p class="result-cta-desc">${p.primeAngle}</p>
+      <a href="LINK_CHECKOUT_AQUI" class="btn btn-gold">${ctaButtonText}</a>
+      <p class="result-cta-price">R$ 47 · Acesso imediato · Garantia de 7 dias</p>
+    </div>
+
+    <div class="result-disclaimer">
+      Este resultado tem caráter exclusivamente educativo e informativo. Não constitui diagnóstico clínico e não substitui avaliação médica ou psicológica. Se você está passando por dificuldades significativas, procure um profissional de saúde habilitado.
+    </div>
+
+    <div class="result-restart">
+      <button class="btn-restart" onclick="restartQuiz()">Refazer o teste</button>
+    </div>
+  `;
+}
+
+function restartQuiz() {
+  currentQ = 0;
+  answers  = Array(questions.length).fill(null);
+  scores   = Array(8).fill(0);
+  document.getElementById('screen-result').style.display = 'none';
+  document.getElementById('screen-email').style.display  = 'none';
+  document.getElementById('screen-intro').style.display  = 'flex';
+  // Reseta o campo de e-mail
+  const input = document.getElementById('email-input');
+  if (input) { input.value = ''; input.classList.remove('error'); }
+  document.getElementById('email-error').classList.remove('visible');
+  document.querySelector('.btn-email').disabled = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
