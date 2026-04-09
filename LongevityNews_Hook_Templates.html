@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LongevityNews — Hook Templates</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-l: #EAD08A;
+    --gold-d: #A07830;
+    --charcoal: #1C1C1A;
+    --cream: #FAF6EF;
+    --muted: #6B6B67;
+    --border: #E8E0D0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #F0EBE3;
+    font-family: 'Jost', sans-serif;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold-d);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .templates-row {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .template-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .template-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold-d);
+    text-align: center;
+  }
+
+  .template-desc {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ========================
+     FRAME: 1080x1920 → 270x480 (25%)
+  ======================== */
+  .frame {
+    width: 270px;
+    height: 480px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,.18);
+  }
+
+  /* ========================
+     ESTILO 1 — TEXTO GRANDE
+  ======================== */
+  .s1 { background: var(--charcoal); }
+
+  .s1 .top-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .s1 .kicker {
+    position: absolute;
+    top: 20px; left: 20px;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--gold-l);
+  }
+
+  .s1 .hook-block {
+    position: absolute;
+    top: 50%;
+    left: 20px; right: 20px;
+    transform: translateY(-60%);
+  }
+
+  .s1 .hook-text {
+    font-family: 'Jost', sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+  }
+
+  .s1 .hook-text em {
+    color: var(--gold-l);
+    font-style: normal;
+  }
+
+  .s1 .divline {
+    width: 28px;
+    height: 2px;
+    background: var(--gold);
+    margin: 14px 0;
+  }
+
+  .s1 .hook-sub {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255,255,255,.5);
+    line-height: 1.5;
+  }
+
+  .s1 .brand-sig {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    color: rgba(255,255,255,.35);
+    letter-spacing: .04em;
+  }
+
+  .s1 .brand-sig span { color: var(--gold); }
+
+  /* ========================
+     ESTILO 2 — TALKING HEAD
+  ======================== */
+  .s2 { background: #8A8278; }
+
+  .s2 .person-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #9A8E80 0%, #7A6E62 100%);
+  }
+
+  .s2 .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(28,28,26,.5);
+  }
+
+  .s2 .bubble-wrap {
+    position: absolute;
+    top: 50%;
+    left: 16px; right: 16px;
+    transform: translateY(-65%);
+  }
+
+  .s2 .bubble {
+    background: rgba(255,255,255,.96);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .s2 .bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 20px;
+    width: 0; height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid rgba(255,255,255,.96);
+  }
+
+  .s2 .bubble-text {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1.25;
+    letter-spacing: -.01em;
+  }
+
+  .s2 .bubble-text em {
+    color: var(--gold-d);
+    font-style: normal;
+  }
+
+  .s2 .bubble-label {
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.6);
+    padding-left: 4px;
+  }
+
+  .s2 .ig-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 20px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(to bottom, rgba(0,0,0,.45) 0%, transparent 100%);
+  }
+
+  .s2 .ig-av {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 1.5px solid var(--gold-l);
+    flex-shrink: 0;
+  }
+
+  .s2 .ig-user { font-size: 10px; font-weight: 500; color: #fff; }
+  .s2 .ig-follow { font-size: 9px; color: rgba(255,255,255,.6); margin-left: auto; }
+
+  .s2 .prog {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: rgba(255,255,255,.15);
+  }
+  .s2 .prog-fill {
+    height: 100%;
+    width: 5%;
+    background: var(--gold-l);
+  }
+
+  .s2 .brand-sig {
+    position: absolute;
+    bottom: 20px; left: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    color: rgba(255,255,255,.35);
+    letter-spacing: .04em;
+  }
+  .s2 .brand-sig span { color: var(--gold-l); }
+
+  /* ========================
+     ESTILO 3 — LEGENDA CENTRAL
+  ======================== */
+  .s3 { background: #7A7268; }
+
+  .s3 .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(28,28,26,.55);
+  }
+
+  .s3 .caption-wrap {
+    position: absolute;
+    top: 50%;
+    left: 16px; right: 16px;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+
+  .s3 .word-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  .s3 .word {
+    font-family: 'Jost', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -.01em;
+    line-height: 1.2;
+  }
+
+  .s3 .word.hi {
+    background: var(--gold);
+    color: var(--charcoal);
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
+
+  .s3 .word.dim { color: rgba(255,255,255,.35); }
+
+  .s3 .mic-dot {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px auto 0;
+    font-size: 12px;
+  }
+
+  .s3 .ig-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 20px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(to bottom, rgba(0,0,0,.45) 0%, transparent 100%);
+  }
+
+  .s3 .ig-av {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 1.5px solid var(--gold-l);
+    flex-shrink: 0;
+  }
+
+  .s3 .ig-user { font-size: 10px; font-weight: 500; color: #fff; }
+  .s3 .ig-follow { font-size: 9px; color: rgba(255,255,255,.6); margin-left: auto; }
+
+  .s3 .prog {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: rgba(255,255,255,.15);
+  }
+  .s3 .prog-fill {
+    height: 100%;
+    width: 5%;
+    background: var(--gold-l);
+  }
+
+  .s3 .brand-sig {
+    position: absolute;
+    bottom: 20px; left: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    color: rgba(255,255,255,.35);
+    letter-spacing: .04em;
+  }
+  .s3 .brand-sig span { color: var(--gold-l); }
+
+  /* ========================
+     ESTILO 4 — BEFORE / AFTER
+  ======================== */
+  .s4 { background: var(--cream); }
+
+  .s4 .before-half {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: var(--charcoal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .s4 .after-half {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 50%;
+    background: var(--cream);
+    border-top: 2px solid var(--gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .s4 .half-tag {
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .s4 .before-half .half-tag { color: var(--gold-l); }
+  .s4 .after-half .half-tag { color: var(--gold-d); }
+
+  .s4 .half-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .s4 .before-half .half-title { color: #fff; }
+  .s4 .after-half .half-title { color: var(--charcoal); }
+
+  .s4 .half-line {
+    width: 18px; height: 1px;
+    margin: 8px 0;
+  }
+
+  .s4 .before-half .half-line { background: rgba(255,255,255,.3); }
+  .s4 .after-half .half-line { background: var(--gold); }
+
+  .s4 .half-sub {
+    font-size: 9px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .s4 .before-half .half-sub { color: rgba(255,255,255,.5); }
+  .s4 .after-half .half-sub { color: var(--muted); }
+
+  .s4 .arrow-badge {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--charcoal);
+    font-weight: 700;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+
+  .s4 .ig-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  .s4 .ig-av {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 1.5px solid var(--gold-l);
+    flex-shrink: 0;
+  }
+
+  .s4 .ig-user { font-size: 9px; font-weight: 500; color: #fff; }
+  .s4 .ig-follow { font-size: 8px; color: rgba(255,255,255,.6); margin-left: auto; }
+
+  .s4 .prog {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: rgba(255,255,255,.15);
+    z-index: 15;
+  }
+  .s4 .prog-fill { height: 100%; width: 5%; background: var(--gold-l); }
+
+  /* ========================
+     HOOK SCRIPT BOX
+  ======================== */
+  .hook-box {
+    width: 270px;
+    background: #fff;
+    border: .5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+
+  .hook-box .h-title {
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold-d);
+    margin-bottom: 6px;
+  }
+
+  .hook-box .h-text {
+    font-size: 11px;
+    font-weight: 500;
+    color: #1C1C1A;
+    line-height: 1.45;
+  }
+
+  .hook-box .h-text b { color: var(--gold-d); }
+
+  .hook-box .h-cta {
+    font-size: 9px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 5px;
+    line-height: 1.4;
+  }
+
+  /* ========================
+     HEADER GERAL
+  ======================== */
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--charcoal);
+    letter-spacing: .03em;
+  }
+
+  .page-logo span { color: var(--gold); }
+
+  .page-tagline {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .page-badge {
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gold-d);
+    background: #F5E8C4;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* Pessoa SVG simulada */
+  .person-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div>
+    <div class="page-logo">Longevity<span>News</span></div>
+    <div class="page-tagline">Hook Templates — Reels &amp; Feed</div>
+  </div>
+  <div class="page-badge">4 Estilos · Afirmação Controversa</div>
+</div>
+
+<div>
+  <div class="section-title">Templates de Hook — 9:16 Vertical (Reels / Stories)</div>
+  <div class="templates-row">
+
+    <!-- ESTILO 1: TEXTO GRANDE -->
+    <div class="template-wrap">
+      <div class="frame s1">
+        <div class="top-accent"></div>
+        <div class="kicker">LongevityNews</div>
+        <div class="hook-block">
+          <div class="hook-text">
+            Descansar <em>não</em> é o<br>problema.<br>Ignorar o<br>corpo <em>é.</em>
+          </div>
+          <div class="divline"></div>
+          <div class="hook-sub">O que a ciência diz sobre os sinais que você está escolhendo não ver</div>
+        </div>
+        <div class="brand-sig">Longevity<span>News</span></div>
+      </div>
+      <div class="hook-box">
+        <div class="h-title">Script do hook</div>
+        <div class="h-text">"Descansar não é o problema. Ignorar o corpo é."</div>
+        <div class="h-cta">→ Continua: "Aqui estão 3 sinais que você está ignorando..."</div>
+      </div>
+      <div class="template-label">Texto Grande</div>
+      <div class="template-desc">Fundo simples · máximo impacto · 2 seg</div>
+    </div>
+
+    <!-- ESTILO 2: TALKING HEAD -->
+    <div class="template-wrap">
+      <div class="frame s2">
+        <svg class="person-svg" viewBox="0 0 270 480" xmlns="http://www.w3.org/2000/svg">
+          <rect width="270" height="480" fill="#9A8E80"/>
+          <ellipse cx="135" cy="490" rx="240" ry="140" fill="#857870" opacity=".5"/>
+          <rect x="97" y="215" width="76" height="265" rx="10" fill="#7A6E60"/>
+          <rect x="78" y="208" width="114" height="35" rx="17" fill="#7A6E60"/>
+          <rect x="64" y="215" width="22" height="100" rx="11" fill="#7A6E60"/>
+          <rect x="184" y="215" width="22" height="100" rx="11" fill="#7A6E60"/>
+          <rect x="122" y="170" width="26" height="44" rx="10" fill="#9A8E82"/>
+          <ellipse cx="135" cy="151" rx="38" ry="43" fill="#9A8E82"/>
+          <ellipse cx="135" cy="118" rx="40" ry="23" fill="#4A3E34"/>
+          <rect x="97" y="110" width="76" height="19" rx="8" fill="#4A3E34"/>
+        </svg>
+        <div class="overlay"></div>
+        <div class="prog"><div class="prog-fill"></div></div>
+        <div class="ig-header">
+          <div class="ig-av"></div>
+          <div class="ig-user">longevitynews</div>
+          <div class="ig-follow">Seguir</div>
+        </div>
+        <div class="bubble-wrap">
+          <div class="bubble">
+            <div class="bubble-text">Médicos não falam isso: <em>sua fadiga crônica tem origem mensurável.</em></div>
+          </div>
+          <div class="bubble-label">continua assistindo para entender</div>
+        </div>
+        <div class="brand-sig">Longevity<span>News</span></div>
+      </div>
+      <div class="hook-box">
+        <div class="h-title">Script do hook</div>
+        <div class="h-text">"Médicos não falam isso: sua fadiga crônica tem origem mensurável."</div>
+        <div class="h-cta">→ Continua: "E existe um protocolo para isso..."</div>
+      </div>
+      <div class="template-label">Talking Head</div>
+      <div class="template-desc">Rosto + fala · conexão humana · confiança</div>
+    </div>
+
+    <!-- ESTILO 3: LEGENDA CENTRAL -->
+    <div class="template-wrap">
+      <div class="frame s3">
+        <svg class="person-svg" viewBox="0 0 270 480" xmlns="http://www.w3.org/2000/svg">
+          <rect width="270" height="480" fill="#888078"/>
+          <ellipse cx="135" cy="480" rx="230" ry="130" fill="#787068" opacity=".5"/>
+          <rect x="101" y="210" width="68" height="270" rx="10" fill="#686058"/>
+          <rect x="82" y="202" width="106" height="35" rx="17" fill="#686058"/>
+          <rect x="67" y="210" width="20" height="96" rx="10" fill="#686058"/>
+          <rect x="183" y="210" width="20" height="96" rx="10" fill="#686058"/>
+          <rect x="123" y="165" width="24" height="40" rx="9" fill="#888078"/>
+          <ellipse cx="135" cy="146" rx="35" ry="40" fill="#888078"/>
+          <ellipse cx="135" cy="115" rx="37" ry="21" fill="#524844"/>
+          <rect x="99" y="108" width="72" height="16" rx="7" fill="#524844"/>
+        </svg>
+        <div class="overlay"></div>
+        <div class="prog"><div class="prog-fill"></div></div>
+        <div class="ig-header">
+          <div class="ig-av"></div>
+          <div class="ig-user">longevitynews</div>
+          <div class="ig-follow">Seguir</div>
+        </div>
+        <div class="caption-wrap">
+          <div class="word-row">
+            <span class="word dim">você</span>
+            <span class="word dim">não</span>
+            <span class="word dim">está</span>
+          </div>
+          <div class="word-row">
+            <span class="word hi">envelhecendo</span>
+          </div>
+          <div class="word-row">
+            <span class="word dim">está</span>
+          </div>
+          <div class="word-row">
+            <span class="word hi">inflamando</span>
+          </div>
+          <div class="mic-dot">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+              <rect x="4" y="1" width="4" height="6" rx="2" fill="#1C1C1A"/>
+              <path d="M2 6c0 2.2 1.8 4 4 4s4-1.8 4-4" stroke="#1C1C1A" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="6" y1="10" x2="6" y2="12" stroke="#1C1C1A" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="brand-sig">Longevity<span>News</span></div>
+      </div>
+      <div class="hook-box">
+        <div class="h-title">Script do hook</div>
+        <div class="h-text">"Você não está envelhecendo. Está inflamando."</div>
+        <div class="h-cta">→ Continua: "A diferença muda tudo no protocolo..."</div>
+      </div>
+      <div class="template-label">Legenda Central</div>
+      <div class="template-desc">Palavra em destaque · estilo viral · TikTok</div>
+    </div>
+
+    <!-- ESTILO 4: BEFORE / AFTER -->
+    <div class="template-wrap">
+      <div class="frame s4">
+        <div class="prog"><div class="prog-fill"></div></div>
+        <div class="ig-header">
+          <div class="ig-av"></div>
+          <div class="ig-user">longevitynews</div>
+          <div class="ig-follow">Seguir</div>
+        </div>
+        <div class="before-half">
+          <span class="half-tag">Antes</span>
+          <div class="half-title">"É só cansaço. Vou melhorar sozinho."</div>
+          <div class="half-line"></div>
+          <div class="half-sub">O que a maioria acredita</div>
+        </div>
+        <div class="after-half">
+          <span class="half-tag">O que a ciência mostra</span>
+          <div class="half-title">Cansaço persistente é marcador mensurável — não desculpa.</div>
+          <div class="half-line"></div>
+          <div class="half-sub">Protocolo disponível no link da bio</div>
+        </div>
+        <div class="arrow-badge">↓</div>
+      </div>
+      <div class="hook-box">
+        <div class="h-title">Script do hook</div>
+        <div class="h-text">"Isso que você chama de cansaço tem nome científico. E tem protocolo."</div>
+        <div class="h-cta">→ Continua: "Veja o antes e depois do marcador X..."</div>
+      </div>
+      <div class="template-label">Before / After</div>
+      <div class="template-desc">Contraste direto · alta conversão · CTA natural</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
